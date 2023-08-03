@@ -3,7 +3,7 @@ pipeline {
     {
         node
     {
-        label jenkins-docker-workernode2
+        label 'jenkins-docker-workernode2'
     }
     }
     stages {
