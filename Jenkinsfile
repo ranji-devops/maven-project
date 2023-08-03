@@ -1,11 +1,11 @@
 pipeline {
-    agent any
+    agent jenkins-docker-workernode2
 
     stages {
         stage('Checkout') {
             steps {
                 // Get some code from a GitHub repository
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/DevOpsHubIN/maven-project.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ranji-devops/maven-project.git']]])
             }
         }
         
@@ -26,8 +26,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
         	        sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh "docker tag mywebapp:v${BUILD_NUMBER} ${env.dockerHubUser}/mywebapp:v${BUILD_NUMBER}"
-                    sh "docker push ${env.dockerHubUser}/mywebapp:v${BUILD_NUMBER}"
+                    sh "docker tag webapp:v${BUILD_NUMBER} ${env.dockerHubUser}/webapp:v${BUILD_NUMBER}"
+                    sh "docker push ${env.dockerHubUser}/webapp:v${BUILD_NUMBER}"
                 }
 
             }
