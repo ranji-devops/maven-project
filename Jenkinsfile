@@ -1,9 +1,11 @@
 pipeline {
     agent 
     {
+        node
+    {
         label jenkins-docker-workernode2
     }
-
+    }
     stages {
         stage('Checkout') {
             steps {
